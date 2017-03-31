@@ -1,0 +1,38 @@
+/* ------------------------------------ *
+ CSS
+ Martes, 21 de Agosto de 2012 04:52:05 a.m.
+ HAPedit 3.1.11.111
+ * ------------------------------------ */
+
+ label{
+    float:left;
+    width:30%;
+    text-align:right;}
+
+fieldset{
+    background:#FFFF5D;
+    width:50%;
+    margin:auto}
+
+legend{
+    border:10px solid #FF57EB;
+    background:#FF2B36;}
+
+input[type="text"]{
+      width:60%;
+      margin:2px 2px 2px 2px;}
+
+textarea{
+    width:60%;
+    margin:2px 2px 2px 2px;
+    }
+
+select{
+    width:60%;
+    margin:2px 2px 2px 2px;}
+
+.fila{background-color:#ffffcc;}
+
+.filaalterna{background-color:#ffcc99;}
+
+.fdg_sortable {cursor:pointer;text-decoration:underline;color:#00c;}

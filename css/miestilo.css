@@ -1,0 +1,53 @@
+/* ------------------------------------ *
+ CSS
+ Sábado, 03 de Septiembre de 2011 03:45:45 p.m.
+ HAPedit 3.1.11.111
+ * ------------------------------------
+
+label{
+  width:30%;
+  float:left;
+  text-align:right;
+}
+legend{
+  border:2px solid #FFADB9;
+  background:#FFD1D8;
+}
+fieldset{
+  background:#FFCDDA;
+}*/
+
+
+label{
+    float:left;
+    width:30%;
+    text-align:right;}
+
+fieldset{
+    background:#1F48FF;}
+
+legend{
+    border:2px solid #8BFF61;
+    color:#FFFFFF;
+    background-color: #0000FF;}
+
+input[type="text"]{
+      margin:2px 2px 2px 2px;}
+
+select{
+    margin:2px 2px 2px 2px;}
+
+table {
+    border: 1px solid #000000;
+    margin: 0 auto 0 auto;
+ }
+
+th {
+   background-color:#FFFFFF;
+ }
+  
+td {
+   background-color:#0080FF;
+ }
+
+
