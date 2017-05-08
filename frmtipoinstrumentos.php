@@ -21,7 +21,7 @@ $CmbMateria=$_REQUEST['CmbMateria'];
 $TxtTitulo=$_REQUEST['TxtTitulo'];
 $TxaDescripcion=$_REQUEST['TxaDescripcion'];
 $archivo=$_REQUEST['archivo'];
-$BtnAccion=$_REQUEST['BtnAccion'];
+$BtnAccion = isset($_REQUEST['BtnAccion']) ? $_REQUEST['BtnAccion'] : NULL;
 
 if ($_SESSION['usuario']==NULL){ //comprueba que tenga hecha una session para aportar contenido.
 ?>
@@ -46,9 +46,9 @@ case 'Guardar':
      $separar = explode(".",$_FILES['archivo']['name']);
      $extension=$separar[1];
 
-     $sql = mysql_query("SELECT idmaterial FROM tbmaterialmaterias ORDER BY idmaterial DESC LIMIT 1;");
-     $resultado = mysql_fetch_array($sql);
-     $nombre=$resultado[0]+1;
+     $Sql = mysqli_query("SELECT idmaterial FROM tbmaterialmaterias ORDER BY idmaterial DESC LIMIT 1;");
+      = mysqli_fetch_array($Sql);
+     $nombre=[0]+1;
 
      if ($extension=='pdf' or $extension=='doc' or $extension=='docx'){
 
@@ -58,22 +58,22 @@ case 'Guardar':
         $error = $_FILES['archivo']['error'];
 
         if($subido) {
-                    $conexion =mysql_connect ('localhost', 'root', 'oh43ts7259i9q18');
-                    mysql_select_db('bdguiasuba');
-                    $sql = "INSERT INTO tbmaterialmaterias VALUES ('NULL',
+                    $Conexion =mysqli_connect ('localhost', 'root', 'oh43ts7259i9q18');
+                    mysqli_select_db('bdguiasuba');
+                    $Sql = "INSERT INTO tbmaterialmaterias VALUES ('NULL',
                                                                    '$CmbMateria',
                                                                    '$_SESSION[usuario]',
                                                                    '$TxtTitulo',
                                                                    '$nombrearchivo',
                                                                    '$_POST[TxaDescripcion]','1');";
-                    $resultado=mysql_query($sql);
+                    =mysqli_query($Sql);
                     echo "<script>alert (\"El archivo fue subido con exito!!!\");</script>";
                     $BtnAccion=='Limpiar';
 
         } else { echo "<script>alert (\"Error al subir archivo!!\");</script>";}
       } else { echo "<script>alert (\"No puede subir ese tipo de archivo, cambie el formato a .pdf, .doc o .docx!!\");</script>";}
 
-     //echo "$sql: ".mysql_error; //Muestra los errores de la BD
+     //echo "$Sql: ".mysqli_error; //Muestra los errores de la BD
      break;
 
 case 'Limpiar':
@@ -95,7 +95,7 @@ case 'Limpiar':
 <head>
 <title>GUIASUBA - APORTA CONTENIDO</title>
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-<meta name="generator" content="HAPedit 3.1">
+
 <link rel="stylesheet" type="text/css" href="css/basico.css" />
 
 
@@ -122,7 +122,7 @@ function validar(form){
 </script>
 
 </head>
-<body bgcolor="#FFFFFF">
+<body>
       <form action="<? $PHP_SELF ?>" method="post" enctype="multipart/form-data" name="form">
       <div align=center><h2>APORTA CONTENIDO</h2></div>
 
@@ -132,12 +132,12 @@ function validar(form){
       <select name= "CmbMateria" size="1"><br>
               <option value="0" >Seleccione</option>
               <?
-                $sql = "SELECT * FROM tbmateria;";
-                $resultado=mysql_query($sql);
-                while ($registro = mysql_fetch_array($resultado)){
-                      if ($CmbMateria==$registro[0]){$x='Selected'; }else{$x='';}
-                      echo "<b><option value= \"$registro[idmateria]\" $x> $registro[materia]
-                 ($registro[idmateria])</option></b>";}
+                $Sql = "SELECT * FROM tbmateria;";
+                =mysqli_query($Sql);
+                while ( = mysqli_fetch_array()){
+                      if ($CmbMateria==[0]){$x='Selected'; }else{$x='';}
+                      echo "<b><option value= \"[idmateria]\" $x> [materia]
+                 ([idmateria])</option></b>";}
               ?>
 
        </select><br>

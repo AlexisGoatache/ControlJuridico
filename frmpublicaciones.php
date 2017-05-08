@@ -24,25 +24,25 @@ $CmbTipo=$_REQUEST['CmbTipo'];
 $TxtNroPub=$_REQUEST['TxtNroPub'];
 $TxaDesPub=$_REQUEST['TxaDesPub'];
 $CmbStatus=$_REQUEST['CmbStatus'];
-$BtnAccion=$_REQUEST['BtnAccion'];
+$BtnAccion = isset($_REQUEST['BtnAccion']) ? $_REQUEST['BtnAccion'] : NULL;
 
 switch($BtnAccion){
 
 case 'Buscar':
      //3. Contruir la consulta (Query)
-     $sql="SELECT * FROM $TbNombre WHERE pubid='$TxtId';";
+     $Sql="SELECT * FROM $TbNombre WHERE pubid='$TxtId';";
      //4. Ejecutar la consulta
-     $resultado = mysql_query($sql) or die( "Error en $sql: " . mysql_error() );
+      = mysqli_query($Sql) or die( "Error en $Sql: " . mysqli_error() );
      // 5. verificar si lo encontro
-     $registro=mysql_fetch_array($resultado);
-     if(mysql_num_rows($resultado)>0){
+     =mysqli_fetch_array();
+     if(mysqli_num_rows()>0){
          //6. recuperar registros
-         $CmbGaceta=$registro['gacid'];
-         $CmbEnte=$registro['entid'];
-         $CmbTipo=$registro['tinid'];
-         $TxtNroPub=$registro['pubnro'];
-         $TxaPubDes=$registro['pubdes'];
-         $CmbStatus=$registro['staid'];
+         $CmbGaceta=['gacid'];
+         $CmbEnte=['entid'];
+         $CmbTipo=['tinid'];
+         $TxtNroPub=['pubnro'];
+         $TxaPubDes=['pubdes'];
+         $CmbStatus=['staid'];
          } else {
          ?><script>alert ("<?echo $FrmNombre?> No encontrada!!!");</script><?
          $BtnAccion='Limpiar';}
@@ -50,34 +50,34 @@ break;
 
 case 'Modificar':
      //3. Contruir la consulta (Query)
-     $sql="UPDATE $TbNombre SET `gactip`='$CmbTipo',
+     $Sql="UPDATE $TbNombre SET `gactip`='$CmbTipo',
                                 `gacano`='$TxtAno',
                                 `gacmes`='$TxtMes',
                                 `gacsta`='$TxtStatus',
                                 `gacfec`='$TxtFecha' WHERE gacid='$TxtId'";
 
      //4. Ejecutar la consulta
-     $resultado = mysql_query($sql) or die( "Error en $sql: " . mysql_error() );
+      = mysqli_query($Sql) or die( "Error en $Sql: " . mysqli_error() );
      ?>
-     <script>alert ("Los datos de <? echo $FrmNombre;?> fueron modificado con éxito!!!")</script>
+     <script>alert ("Los datos de <? echo $FrmNombre;?> fueron modificado con ï¿½xito!!!")</script>
      <?
 break;
 
 
 case 'Agregar':
-     $sql="SELECT * FROM $TbNombre WHERE gacid='$TxtId';";
-     $resultado = mysql_query($sql) or die( "Error en $sql: " . mysql_error() );
-     $registro=mysql_fetch_array($resultado);
-     if(mysql_num_rows($resultado)==0){
-     $sql="INSERT INTO $TbNombre VALUES('','$CmbTipo','$Cmb','$TxtMes','$TxtFecha','$TxtStatus');";
-     mysql_query($sql);
+     $Sql="SELECT * FROM $TbNombre WHERE gacid='$TxtId';";
+      = mysqli_query($Sql) or die( "Error en $Sql: " . mysqli_error() );
+     =mysqli_fetch_array();
+     if(mysqli_num_rows()==0){
+     $Sql="INSERT INTO $TbNombre VALUES('','$CmbTipo','$Cmb','$TxtMes','$TxtFecha','$TxtStatus');";
+     mysqli_query($Sql);
      ?>
-       <script>alert ("Los datos de <? echo $FrmNombre;?> fueron registrados con éxito!!!");</script>
+       <script>alert ("Los datos de <? echo $FrmNombre;?> fueron registrados con ï¿½xito!!!");</script>
      <?
      $BtnAccion='Limpiar';
      }else{
      ?>
-       <script>alert ("Esta <? echo $FrmNombre;?> ya está registrada!!!");</script>
+       <script>alert ("Esta <? echo $FrmNombre;?> ya estï¿½ registrada!!!");</script>
      <?
      }
 break;
@@ -100,7 +100,7 @@ if ($BtnAccion=='Limpiar'){
 <head>
 <title><?echo $Sistema?></title>
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-<meta name="generator" content="HAPedit 3.1">
+
 <link rel="stylesheet" type="text/css" href="css/basico.css" />
 
 <!--alert('Bienvenido '+ '<? echo $_SESSION['usuario']?>' + ' ahora puedes aportar contenido a GuiasUba!!!');-->
@@ -149,10 +149,10 @@ function validar(form){
 </script>
 
 </head>
-<body bgcolor="#FFFFFF">
+<body>
       <form action="<? $PHP_SELF ?>" method="post" enctype="multipart/form-data" name="form">
       <fieldset>
-      <div align=center><h2><?echo $FrmDescripcion?></h2></div>
+      <div align=center><h2><?php  echo $_SESSION['FrmDescripcion']; ?></h2></div>
 
       <label>Id Publicacion:</label>
       <input type='text' size='8' maxlength='8' name='TxtId' value="<? echo $TxtId ?>"><br>
@@ -161,11 +161,11 @@ function validar(form){
       <select name= "CmbGaceta" size="1"><br>
               <option value="0" >Seleccione</option>
               <?
-                $sql = "SELECT gacid FROM tbgacetas ORDER BY gacid ASC;";
-                $resultado=mysql_query($sql);
-                while ($registro = mysql_fetch_array($resultado)){
-                      if ($CmbGaceta==$registro[gacid]){$x='Selected'; }else{$x='';}
-                      echo "<b><option value= \"$registro[gacid]\" $x> $registro[gacid]</option></b>";}
+                $Sql = "SELECT gacid FROM tbgacetas ORDER BY gacid ASC;";
+                =mysqli_query($Sql);
+                while ( = mysqli_fetch_array()){
+                      if ($CmbGaceta==[gacid]){$x='Selected'; }else{$x='';}
+                      echo "<b><option value= \"[gacid]\" $x> [gacid]</option></b>";}
               ?>
 
        </select><br>
@@ -174,11 +174,11 @@ function validar(form){
       <select name= "CmbEnte" size="1"><br>
               <option value="0" >Seleccione</option>
               <?
-                $sql = "SELECT * FROM tbentes ORDER BY entdes ASC;";
-                $resultado=mysql_query($sql);
-                while ($registro = mysql_fetch_array($resultado)){
-                      if ($CmbEnte==$registro[entid]){$x='Selected'; }else{$x='';}
-                      echo "<b><option value= \"$registro[entid]\" $x> $registro[entdes]</option></b>";}
+                $Sql = "SELECT * FROM tbentes ORDER BY entdes ASC;";
+                =mysqli_query($Sql);
+                while ( = mysqli_fetch_array()){
+                      if ($CmbEnte==[entid]){$x='Selected'; }else{$x='';}
+                      echo "<b><option value= \"[entid]\" $x> [entdes]</option></b>";}
               ?>
        </select><br>
 
@@ -186,11 +186,11 @@ function validar(form){
       <select name= "CmbTipo" size="1"><br>
               <option value="0" >Seleccione</option>
               <?
-                $sql = "SELECT * FROM tbtipoinstrumentos ORDER BY tindes ASC;";
-                $resultado=mysql_query($sql);
-                while ($registro = mysql_fetch_array($resultado)){
-                      if ($CmbEnte==$registro[tinid]){$x='Selected'; }else{$x='';}
-                      echo "<b><option value= \"$registro[tinid]\" $x> $registro[tindes]</option></b>";}
+                $Sql = "SELECT * FROM tbtipoinstrumentos ORDER BY tindes ASC;";
+                =mysqli_query($Sql);
+                while ( = mysqli_fetch_array()){
+                      if ($CmbEnte==[tinid]){$x='Selected'; }else{$x='';}
+                      echo "<b><option value= \"[tinid]\" $x> [tindes]</option></b>";}
               ?>
        </select><br>
 
@@ -204,11 +204,11 @@ function validar(form){
       <select name= "CmbStatus" size="1"><br>
               <option value="0" >Seleccione</option>
               <?
-                $sql = "SELECT * FROM tbstatus;";
-                $resultado=mysql_query($sql);
-                while ($registro = mysql_fetch_array($resultado)){
-                      if ($CmbTipo==$registro[staid]){$x='Selected'; }else{$x='';}
-                      echo "<b><option value= \"$registro[staid]\" $x> $registro[stades]</option></b>";}
+                $Sql = "SELECT * FROM tbstatus;";
+                =mysqli_query($Sql);
+                while ( = mysqli_fetch_array()){
+                      if ($CmbTipo==[staid]){$x='Selected'; }else{$x='';}
+                      echo "<b><option value= \"[staid]\" $x> [stades]</option></b>";}
               ?>
 
        </select><br>

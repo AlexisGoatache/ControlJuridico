@@ -8,7 +8,7 @@ session_start();
 require_once("conexion.php");
 
 // RESCATE DE VARIABLES DEL FORMULARIO
-$BtnAccion=$_REQUEST['BtnAccion'];
+$BtnAccion = isset($_REQUEST['BtnAccion']) ? $_REQUEST['BtnAccion'] : NULL;
 $TxtGaceta=$_REQUEST['TxtGaceta'];
 $TxtNroPub=$_REQUEST['TxtNroPub'];
 $TxtDescripcion=$_REQUEST['TxtDescripcion'];
@@ -60,9 +60,9 @@ function Query($TbNombre,$TxtGaceta,$TxtEntes,$TxtNroPub,$TxtDescripcion,$CmbSta
     $Sql="SELECT * FROM $TbNombre,tbstatus WHERE $TbNombre.pubsta=tbstatus.staid $Consulta GROUP BY $TbNombre.pubid ORDER BY $TbNombre.pubgac DESC;";
 
   // 4 EJECUTA LA CONSULTA
-  global $resultado;
-  $resultado = mysql_query($Sql) or die( "Error en $Sql: " . mysql_error() );
-  return $resultado;
+  global $Resultado;
+  $Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
+  return $Resultado;
 }
 
 ?>
@@ -71,18 +71,18 @@ function Query($TbNombre,$TxtGaceta,$TxtEntes,$TxtNroPub,$TxtDescripcion,$CmbSta
 <html>
 
 <head>
-<title><?echo $FrmDescripcion?></title>
+<title><?php  echo $_SESSION['FrmDescripcion']; ?></title>
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-<meta name="generator" content="HAPedit 3.1">
+
 <link rel="stylesheet" type="text/css" href="css/consulta.css" />
 </head>
 
 <body <!--bgcolor="#FFFFFF"-->
 
-<form action="<? $PHP_SELF ?>" name="<?echo $FrmDescripcion?>" method="post">
+<form action="<? $PHP_SELF ?>" name="<?php  echo $_SESSION['FrmDescripcion']; ?>" method="post">
   <fieldset>
-    <div align=center><h2><?echo $FrmDescripcion?></h2></div>
-    <!--legend> <?echo $FrmDescripcion?> </legend-->
+    <div align=center><h2><?php  echo $_SESSION['FrmDescripcion']; ?></h2></div>
+    <!--legend> <?php  echo $_SESSION['FrmDescripcion']; ?> </legend-->
       <table>
         <tr>
           <div align=center>
@@ -100,21 +100,21 @@ function Query($TbNombre,$TxtGaceta,$TxtEntes,$TxtNroPub,$TxtDescripcion,$CmbSta
 
           <th>Ente Publicador <br> <input type='text' size='50' maxlength='50' name='TxtEntes' value="<? echo $TxtEntes ?>"></th>
 
-          <th>Nro. de Publicación <br> <input type='text' size='20' maxlength='20' name='TxtNroPub' value="<? echo $TxtNroPub ?>"></th>
+          <th>Nro. de Publicaciï¿½n <br> <input type='text' size='20' maxlength='20' name='TxtNroPub' value="<? echo $TxtNroPub ?>"></th>
 
-          <th>Descripción <br> <input type='text' size='150' maxlength='150' name='TxtDescripcion' value="<? echo $TxtDescripcion ?>"></th>
+          <th>Descripciï¿½n <br> <input type='text' size='150' maxlength='150' name='TxtDescripcion' value="<? echo $TxtDescripcion ?>"></th>
 
           <th>Status <br>
             <select name="CmbStatus">
               <option value="0"><b>Status</b></option>
                 <?//CARGA EL COMBO CON LOS TIPOS DE ESTATUS
                 // 3. CONSTRUIR CONSULTA
-                $sql="SELECT * FROM tbstatus;";
+                $Sql="SELECT * FROM tbstatus;";
                 // 4 EJECUTA LA CONSULTA
-                $resultado = mysql_query($sql) or die( "Error en $sql: " . mysql_error() );
+                $Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
                 // 5 RECORRE EL RESULTADO
-                while ($registro = mysql_fetch_array($resultado)) {
-                  echo "<option value='$registro[staid]'>$registro[stades]</option>";}?>
+                while ($Registro = mysqli_fetch_array($Resultado)) {
+                  echo "<option value='$Registro[staid]'>$Registro[stades]</option>";}?>
                 </select></td>
           </th>
         </tr>
@@ -123,21 +123,21 @@ function Query($TbNombre,$TxtGaceta,$TxtEntes,$TxtNroPub,$TxtDescripcion,$CmbSta
         Query($TbNombre,$TxtGaceta,$TxtEntes,$TxtNroPub,$TxtDescripcion,$CmbStatus);
 
        // 5 RECORRE EL RESULTADO
-        $registro=mysql_fetch_array($resultado);
-        if(mysql_num_rows($resultado)>0){
+        $Registro=mysqli_fetch_array($Resultado);
+        if(mysqli_num_rows($Resultado)>0){
           $i=0;
           do{
             $i=$i+1;?>
             <tr>
             <td><?echo $i?></td>
-            <td><?echo "$registro[pubid] </a>" ?></td>
-            <td><?echo "$registro[pubgac] </a>"?></td>
-            <td><?echo "$registro[pubent] </a>"?></td>
-            <td><?echo "$registro[pubnro] </a>"?></td>
-            <td><?echo "$registro[pubdes] </a>"?></td>
-            <td><?echo "$registro[stades] </a>"?></td>
+            <td><?echo "$Registro[pubid] </a>" ?></td>
+            <td><?echo "$Registro[pubgac] </a>"?></td>
+            <td><?echo "$Registro[pubent] </a>"?></td>
+            <td><?echo "$Registro[pubnro] </a>"?></td>
+            <td><?echo "$Registro[pubdes] </a>"?></td>
+            <td><?echo "$Registro[stades] </a>"?></td>
             <tr>
-          <?}while($registro=mysql_fetch_array($resultado));
+          <?}while($Registro=mysqli_fetch_array($Resultado));
             } else {?>
            <script>alert ("No existen registros en la Base de Datos!!!");</script>
          <?}?>

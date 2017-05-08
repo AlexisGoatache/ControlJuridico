@@ -1,6 +1,6 @@
 <?
 //INICIO DE SESSION DE USUARIO
-session_start();
+//session_start();
 
 //SEGURIDAD DE ACCESO
 //require_once("seguridad.php");
@@ -17,20 +17,20 @@ $TbNombre="tbentes";
 //DESARROLLAR LA LOGICA DE LOS BOTONES
 $TxtId=$_REQUEST['TxtId'];
 $TxtDescripcion=$_REQUEST['TxtDescripcion'];
-$BtnAccion=$_REQUEST['BtnAccion'];
+$BtnAccion = isset($_REQUEST['BtnAccion']) ? $_REQUEST['BtnAccion'] : NULL;
 
 switch($BtnAccion){
 
 case 'Buscar':
      //3. Contruir la consulta (Query)
-     $sql="SELECT * FROM $TbNombre WHERE entid='$TxtId';";
+     $Sql="SELECT * FROM $TbNombre WHERE entid='$TxtId';";
      //4. Ejecutar la consulta
-     $resultado=mysql_query($sql);
+     $Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
      // 5. verificar si lo encontro
-     $registro=mysql_fetch_array($resultado);
-     if(mysql_num_rows($resultado)>0){
+     $Registro=mysqli_fetch_array($Resultado);
+     if(mysqli_num_rows($Resultado)>0){
          //6. recuperar registros
-         $TxtDescripcion=$registro['entdes'];
+         $TxtDescripcion=$Registro['entdes'];
          } else {
          ?>
          <script>alert ("Registro No encontrado!!!");</script>
@@ -40,29 +40,29 @@ break;
 
 case 'Modificar':
      //3. Contruir la consulta (Query)
-     $sql="UPDATE $TbNombre SET `entdes`='$TxtDescripcion' WHERE entid='$TxtId'";
+     $Sql="UPDATE $TbNombre SET `entdes`='$TxtDescripcion' WHERE entid='$TxtId'";
 
      //4. Ejecutar la consulta
-     $resultado = mysql_query($sql) or die( "Error en $sql: " . mysql_error() );
+     $Resultado = my$Sqlquery($Sql) or die( $Sqlor en $Sql: " . mysqli_error() );
      ?>
-     <script>alert ("Los datos de <? echo $FrmNombre;?> fueron modificado con éxito!!!")</script>
+     <script>alert ("Los datos de <? echo $FrmNombre;?> fueron modificado con ï¿½xito!!!")</script>
      <?
 break;
 
 case 'Agregar':
-     $sql="SELECT * FROM $TbNombre WHERE entdes='$TxtDescripcion';";
-     $resultado=mysql_query($sql);
-     $registro=mysql_fetch_array($resultado);
-     if(mysql_num_rows($resultado)==0){
-     $sql="INSERT INTO $TbNombre VALUES('','$TxtDescripcion');";
-     mysql_query($sql);
+     $Sql="SELECT * FROM $TbNombre WHERE entdes='$TxtDescripcion';";
+     $Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
+     $Registro=mysqli_fetch_array($Resultado);
+     if(mysqli_num_rows($Resultado)==0){
+     $Sql="INSERT INTO $TbNombre VALUES('','$TxtDescripcion');";
+     mysqli_query($Sql);
      ?>
-       <script>alert ("Los datos de <? echo $FrmNombre;?> fueron registrados con éxito!!!");</script>
+       <script>alert ("Los datos de <? echo $FrmNombre;?> fueron registrados con ï¿½xito!!!");</script>
      <?
      $BtnAccion='Limpiar';
      }else{
      ?>
-       <script>alert ("Este <? echo $FrmNombre;?> ya está registrado!!!");</script>
+       <script>alert ("Este <? echo $FrmNombre;?> ya estï¿½ registrado!!!");</script>
      <?
      }
      break;
@@ -80,9 +80,9 @@ if ($BtnAccion=='Limpiar'){
 
 <html>
 <head>
-<title><?echo $Sistema?></title>
+<title><?php  echo $_SESSION['FrmDescripcion']; ?></title>
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-<meta name="generator" content="HAPedit 3.1">
+
 <link rel="stylesheet" type="text/css" href="css/basico.css" />
 
 <script>
@@ -118,10 +118,10 @@ function validar(form){
 </script>
 
 </head>
-<body bgcolor="#FFFFFF">
+<body></body>
       <form action="<? $PHP_SELF ?>" method="post" enctype="multipart/form-data" name="form">
       <fieldset>
-      <div align=center><h2><?echo $FrmDescripcion?></h2></div>
+      <div align=center><h2><?php  echo $_SESSION['FrmDescripcion']; ?></h2></div>
 
       <label>Id Ente:</label>
 
