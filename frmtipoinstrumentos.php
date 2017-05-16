@@ -1,32 +1,41 @@
-<?
-
-//INICIO DE SESION
-session_start();
-
+<?php
 //SEGURIDAD DE ACCESO
-//require_once("seguridad.php");
+require_once("seguridad.php");
 
 //1. CONECTAR CON MYSQL
 //2. CONECTAR CON BD
 require_once("conexion.php");
 
-//VARIABLES DEL FROMULARIO
-$FrmNombre="CamposDocumento";
-$FrmDescripcion="Campo del Documento";
-$TbNombre="tbcamposdoc";
+// RESCATAR LAS VARIABLES DEL FORMULARIO
+
+$BtnAccion = isset($_REQUEST['BtnAccion']) ? $_REQUEST['BtnAccion'] : NULL;
+$Archivo = isset($_REQUEST['Archivo']) ? $_REQUEST['Archivo'] : NULL;
+$TxtId = isset($_REQUEST['TxtId']) ? $_REQUEST['TxtId'] : NULL;
+$TxtDescripcion = isset($_REQUEST['TxtDescripcion']) ? $_REQUEST['TxtDescripcion'] : NULL;
+$TxtTitulo = isset($_REQUEST['TxtTitulo']) ? $_REQUEST['TxtTitulo'] : NULL;
+$CmbTipoMenu = isset($_REQUEST['CmbTipoMenu']) ? $_REQUEST['CmbTipoMenu'] : NULL;
+$CmbMateria = isset($_REQUEST['CmbMateria']) ? $_REQUEST['CmbMateria'] : NULL;
+$_SESSION['FrmNombre']= isset($_REQUEST['FrmNombre']) ? $_REQUEST['FrmNombre'] : NULL;
+$_SESSION['FrmDescripcion']= isset($_REQUEST['FrmDescripcion']) ? $_REQUEST['FrmDescripcion'] : NULL;
+$_SESSION['TbNombre']= isset($_REQUEST['TbNombre']) ? $_REQUEST['TbNombre'] : NULL;
+$_SESSION['TxtId']= isset($_REQUEST['TxtId']) ? $_REQUEST['TxtId'] : NULL;
+
+
+// VARIABLES DEL FORMULARIO
+$Sql="SELECT * FROM tbmenu WHERE mennom='frmconsultamenu'";
+$Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
+while ($Registro = mysqli_fetch_array($Resultado)) {
+	$_SESSION['FrmNombre']=$Registro['mennom'];
+	$_SESSION['FrmDescripcion']=$Registro['mendes'];
+	$_SESSION['TbNombre']=$Registro['tbmaestra'];
+	}
 
 //DESARROLLAR LA LOGICA DE LOS BOTONES
-
-$CmbMateria=$_REQUEST['CmbMateria'];
-$TxtTitulo=$_REQUEST['TxtTitulo'];
-$TxaDescripcion=$_REQUEST['TxaDescripcion'];
-$archivo=$_REQUEST['archivo'];
-$BtnAccion = isset($_REQUEST['BtnAccion']) ? $_REQUEST['BtnAccion'] : NULL;
 
 if ($_SESSION['usuario']==NULL){ //comprueba que tenga hecha una session para aportar contenido.
 ?>
   <script>
-      alert ("Para aportar contenido a GuiasUba, debes estar logueado");
+      alert ("Para aportar contenido, debes estar logueado");
       top.frames['mainframe'].location = "http://localhost/ControlJuridico/principal.php";
   </script>
 
@@ -46,9 +55,10 @@ case 'Guardar':
      $separar = explode(".",$_FILES['archivo']['name']);
      $extension=$separar[1];
 
-     $Sql = mysqli_query("SELECT idmaterial FROM tbmaterialmaterias ORDER BY idmaterial DESC LIMIT 1;");
-      = mysqli_fetch_array($Sql);
-     $nombre=[0]+1;
+     $Sql = "SELECT idmaterial FROM tbmaterialmaterias ORDER BY idmaterial DESC LIMIT 1";
+     $Resultado=mysqli_query($Conexion,$Sql);
+     $Registro= mysqli_fetch_array($Resultado);
+     //$nombre=[0]+1;
 
      if ($extension=='pdf' or $extension=='doc' or $extension=='docx'){
 
@@ -134,7 +144,7 @@ function validar(form){
               <?
                 $Sql = "SELECT * FROM tbmateria;";
                 $Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
-                while ( $Registro=mysqli_fetch_array($Resultado);){
+                while ( $Registro=mysqli_fetch_array($Resultado)){
                       if ($CmbMateria==[0]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[idmateria]\" $x> [materia]
                  ([idmateria])</option></b>";}
