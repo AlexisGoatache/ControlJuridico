@@ -162,7 +162,7 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT gacid FROM tbgacetas ORDER BY gacid ASC;";
-                =mysqli_query($Sql);
+                $Resultado=mysqli_query($Conexion,$Sql);
                 while ( = mysqli_fetch_array()){
                       if ($CmbGaceta==[gacid]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[gacid]\" $x> [gacid]</option></b>";}
@@ -175,7 +175,7 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT * FROM tbentes ORDER BY entdes ASC;";
-                =mysqli_query($Sql);
+                $Resultado=mysqli_query($Conexion,$Sql);
                 while ( = mysqli_fetch_array()){
                       if ($CmbEnte==[entid]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[entid]\" $x> [entdes]</option></b>";}
@@ -187,7 +187,7 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT * FROM tbtipoinstrumentos ORDER BY tindes ASC;";
-                =mysqli_query($Sql);
+                $Resultado=mysqli_query($Conexion,$Sql);
                 while ( = mysqli_fetch_array()){
                       if ($CmbEnte==[tinid]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[tinid]\" $x> [tindes]</option></b>";}
@@ -205,7 +205,7 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT * FROM tbstatus;";
-                =mysqli_query($Sql);
+                $Resultado=mysqli_query($Conexion,$Sql);
                 while ( = mysqli_fetch_array()){
                       if ($CmbTipo==[staid]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[staid]\" $x> [stades]</option></b>";}

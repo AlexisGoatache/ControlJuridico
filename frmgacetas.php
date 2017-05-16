@@ -159,7 +159,7 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT * FROM tbtipogaceta;";
-                =mysqli_query($Sql);
+                $Resultado=mysqli_query($Conexion,$Sql);
                 while ( = mysqli_fetch_array()){
                       if ($CmbTipo==[tgaid]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[tgaid]\" $x> [tgades]</option></b>";}
@@ -181,7 +181,7 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT * FROM tbstatus;";
-                =mysqli_query($Sql);
+                $Resultado=mysqli_query($Conexion,$Sql);
                 while ( = mysqli_fetch_array()){
                       if ($CmbTipo==[gacsta]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[staid]\" $x> [stades]</option></b>";}

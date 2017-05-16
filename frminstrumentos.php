@@ -47,7 +47,7 @@ case 'Guardar':
      $extension=$separar[1];
 
      $Sql = mysqli_query("SELECT idmaterial FROM tbmaterialmaterias ORDER BY idmaterial DESC LIMIT 1;");
-      = mysqli_fetch_array($Sql);
+      $Resultado=mysqli_fetch_array($Conexion,$Sql);
      $nombre=[0]+1;
 
      if ($extension=='pdf' or $extension=='doc' or $extension=='docx'){
@@ -58,15 +58,15 @@ case 'Guardar':
         $error = $_FILES['archivo']['error'];
 
         if($subido) {
-                    $Conexion =mysqli_connect ('localhost', 'root', 'oh43ts7259i9q18');
-                    mysqli_select_db('bdguiasuba');
+                    //$Conexion =mysqli_connect ('localhost', 'root', 'oh43ts7259i9q18');
+                    //mysqli_select_db('bdguiasuba');
                     $Sql = "INSERT INTO tbmaterialmaterias VALUES ('NULL',
                                                                    '$CmbMateria',
                                                                    '$_SESSION[usuario]',
                                                                    '$TxtTitulo',
                                                                    '$nombrearchivo',
                                                                    '$_POST[TxaDescripcion]','1');";
-                    =mysqli_query($Sql);
+                    $Resultado=mysqli_query($Conexion,$Sql);
                     echo "<script>alert (\"El archivo fue subido con exito!!!\");</script>";
                     $BtnAccion=='Limpiar';
 
@@ -133,7 +133,7 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT * FROM tbmateria;";
-                =mysqli_query($Sql);
+                $Resultado=mysqli_query($Conexion,$Sql);
                 while ( = mysqli_fetch_array()){
                       if ($CmbMateria==[0]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[idmateria]\" $x> [materia]

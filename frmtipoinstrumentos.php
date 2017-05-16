@@ -66,7 +66,7 @@ case 'Guardar':
                                                                    '$TxtTitulo',
                                                                    '$nombrearchivo',
                                                                    '$_POST[TxaDescripcion]','1');";
-                    =mysqli_query($Sql);
+                    $Resultado=mysqli_query($Conexion,$Sql);
                     echo "<script>alert (\"El archivo fue subido con exito!!!\");</script>";
                     $BtnAccion=='Limpiar';
 
@@ -133,7 +133,7 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT * FROM tbmateria;";
-                =mysqli_query($Sql);
+                $Resultado=mysqli_query($Conexion,$Sql);
                 while ( = mysqli_fetch_array()){
                       if ($CmbMateria==[0]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[idmateria]\" $x> [materia]
