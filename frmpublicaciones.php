@@ -162,8 +162,8 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT gacid FROM tbgacetas ORDER BY gacid ASC;";
-                $Resultado=mysqli_query($Conexion,$Sql);
-                while ( = mysqli_fetch_array()){
+                $Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
+                while ( $Registro=mysqli_fetch_array($Resultado);){
                       if ($CmbGaceta==[gacid]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[gacid]\" $x> [gacid]</option></b>";}
               ?>
@@ -175,8 +175,8 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT * FROM tbentes ORDER BY entdes ASC;";
-                $Resultado=mysqli_query($Conexion,$Sql);
-                while ( = mysqli_fetch_array()){
+                $Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
+                while ( $Registro=mysqli_fetch_array($Resultado);){
                       if ($CmbEnte==[entid]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[entid]\" $x> [entdes]</option></b>";}
               ?>
@@ -187,8 +187,8 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT * FROM tbtipoinstrumentos ORDER BY tindes ASC;";
-                $Resultado=mysqli_query($Conexion,$Sql);
-                while ( = mysqli_fetch_array()){
+                $Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
+                while ( $Registro=mysqli_fetch_array($Resultado);){
                       if ($CmbEnte==[tinid]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[tinid]\" $x> [tindes]</option></b>";}
               ?>
@@ -205,8 +205,8 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT * FROM tbstatus;";
-                $Resultado=mysqli_query($Conexion,$Sql);
-                while ( = mysqli_fetch_array()){
+                $Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
+                while ( $Registro=mysqli_fetch_array($Resultado);){
                       if ($CmbTipo==[staid]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[staid]\" $x> [stades]</option></b>";}
               ?>
@@ -228,3 +228,5 @@ function validar(form){
 
 
 </html>
+
+

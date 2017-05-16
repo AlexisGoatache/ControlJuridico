@@ -27,7 +27,7 @@ if ($_SESSION['usuario']==NULL){ //comprueba que tenga hecha una session para ap
 ?>
   <script>
       alert ("Para aportar contenido a GuiasUba, debes estar logueado");
-      top.frames['mainframe'].location = "http://guiasuba.dyndns.org/principal.php";
+      top.frames['mainframe'].location = "http://localhost/ControlJuridico/principal.php";
   </script>
 
 <?
@@ -58,15 +58,15 @@ case 'Guardar':
         $error = $_FILES['archivo']['error'];
 
         if($subido) {
-                    $Conexion =mysqli_connect ('localhost', 'root', 'oh43ts7259i9q18');
-                    mysqli_select_db('bdguiasuba');
+                    //$Conexion =mysqli_connect ('localhost', 'root', 'oh43ts7259i9q18');
+                    //mysqli_select_db('bdguiasuba');
                     $Sql = "INSERT INTO tbmaterialmaterias VALUES ('NULL',
                                                                    '$CmbMateria',
                                                                    '$_SESSION[usuario]',
                                                                    '$TxtTitulo',
                                                                    '$nombrearchivo',
                                                                    '$_POST[TxaDescripcion]','1');";
-                    $Resultado=mysqli_query($Conexion,$Sql);
+                    $Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
                     echo "<script>alert (\"El archivo fue subido con exito!!!\");</script>";
                     $BtnAccion=='Limpiar';
 
@@ -133,8 +133,8 @@ function validar(form){
               <option value="0" >Seleccione</option>
               <?
                 $Sql = "SELECT * FROM tbmateria;";
-                $Resultado=mysqli_query($Conexion,$Sql);
-                while ( = mysqli_fetch_array()){
+                $Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
+                while ( $Registro=mysqli_fetch_array($Resultado);){
                       if ($CmbMateria==[0]){$x='Selected'; }else{$x='';}
                       echo "<b><option value= \"[idmateria]\" $x> [materia]
                  ([idmateria])</option></b>";}
