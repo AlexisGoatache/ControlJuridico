@@ -1,30 +1,39 @@
-<?
-//INICIO DE SESSION DE USUARIO
-session_start();
-
+<?php
 //SEGURIDAD DE ACCESO
-//require_once("seguridad.php");
+require_once("seguridad.php");
 
 //1. CONECTAR CON MYSQL
 //2. CONECTAR CON BD
 require_once("conexion.php");
 
-$Sistema="Control Jur&iacute;dico";
-$FrmNombre="Publicacion";
-$FrmDescripcion="Maestro de Publicaciones";
-$TbNombre="tbpublicaciones";
+// RESCATAR LAS VARIABLES DEL FORMULARIO
+//$Sistema="Control Jur&iacute;dico";
+//$FrmNombre="Publicacion";
+//$FrmDescripcion="Maestro de Publicaciones";
+//$TbNombre="tbpublicaciones";
 
+$TxtId=isset($_REQUEST['TxtId']) ? $_REQUEST['TxtId'] : NULL;
+$CmbGaceta=isset($_REQUEST['CmbGaceta']) ? $_REQUEST['CmbGaceta'] : NULL;
+$CmbEnte=isset($_REQUEST['CmbEnte']) ? $_REQUEST['CmbEnte'] : NULL;
+$CmbTipo=isset($_REQUEST['CmbTipo']) ? $_REQUEST['CmbTipo'] : NULL;
+$TxtNroPub=isset($_REQUEST['TxtNroPub']) ? $_REQUEST['TxtNroPub'] : NULL;
+$TxaDesPub=isset($_REQUEST['TxaDesPub']) ? $_REQUEST['TxaDesPub'] : NULL;
+$CmbStatus=isset($_REQUEST['CmbStatus']) ? $_REQUEST['CmbStatus'] : NULL;
+$BtnAccion = isset($_REQUEST['BtnAccion']) ? $_REQUEST['BtnAccion'] : NULL;
+$_SESSION['FrmNombre']= isset($_REQUEST['FrmNombre']) ? $_REQUEST['FrmNombre'] : NULL;
+$_SESSION['FrmDescripcion']= isset($_REQUEST['FrmDescripcion']) ? $_REQUEST['FrmDescripcion'] : NULL;
+$_SESSION['TbNombre']= isset($_REQUEST['TbNombre']) ? $_REQUEST['TbNombre'] : NULL;
+$_SESSION['TxtId']= isset($_REQUEST['TxtId']) ? $_REQUEST['TxtId'] : NULL;
 
+// VARIABLES DEL FORMULARIO
+$Sql="SELECT * FROM tbmenu WHERE mennom='frmpublicacion'";
+$Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
+while ($Registro = mysqli_fetch_array($Resultado)) {
+	$_SESSION['FrmNombre']=$Registro['mennom'];
+	$_SESSION['FrmDescripcion']=$Registro['mendes'];
+	$_SESSION['TbNombre']=$Registro['tbmaestra'];}
 
 //DESARROLLAR LA LOGICA DE LOS BOTONES
-$TxtId=$_REQUEST['TxtId'];
-$CmbGaceta=$_REQUEST['CmbGaceta'];
-$CmbEnte=$_REQUEST['CmbEnte'];
-$CmbTipo=$_REQUEST['CmbTipo'];
-$TxtNroPub=$_REQUEST['TxtNroPub'];
-$TxaDesPub=$_REQUEST['TxaDesPub'];
-$CmbStatus=$_REQUEST['CmbStatus'];
-$BtnAccion = isset($_REQUEST['BtnAccion']) ? $_REQUEST['BtnAccion'] : NULL;
 
 switch($BtnAccion){
 

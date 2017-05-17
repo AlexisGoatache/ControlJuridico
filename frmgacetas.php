@@ -1,29 +1,42 @@
-<?
-//INICIO DE SESSION DE USUARIO
-session_start();
-
+<?php
 //SEGURIDAD DE ACCESO
-//require_once("seguridad.php");
+require_once("seguridad.php");
 
 //1. CONECTAR CON MYSQL
 //2. CONECTAR CON BD
 require_once("conexion.php");
 
-$Sistema="Control Jur&iacute;dico";
-$FrmNombre="Gaceta";
-$FrmDescripcion="Maestro de Gaceta";
-$TbNombre="tbgacetas";
+// RESCATAR LAS VARIABLES DEL FORMULARIO
 
+//$Sistema="Control Jur&iacute;dico";
+//$FrmNombre="Gaceta";
+//$FrmDescripcion="Maestro de Gaceta";
+//$TbNombre="tbgacetas";
+
+$TxtId=isset($_REQUEST['TxtId']) ? $_REQUEST['TxtId'] : NULL;
+$CmbTipo=isset($_REQUEST['CmbTipo']) ? $_REQUEST['CmbTipo'] : NULL;
+$TxtAno=isset($_REQUEST['TxtAno']) ? $_REQUEST['TxtAno'] : NULL;
+$TxtMes=isset($_REQUEST['TxtMes']) ? $_REQUEST['TxtMes'] : NULL;
+$TxtFecha=isset($_REQUEST['TxtFecha']) ? $_REQUEST['TxtFecha'] : NULL;
+$CmbStatus=isset($_REQUEST['CmbStatus']) ? $_REQUEST['CmbStatus'] : NULL;
+$BtnAccion = isset($_REQUEST['BtnAccion']) ? $_REQUEST['BtnAccion'] : NULL;
+$_SESSION['FrmNombre']= isset($_REQUEST['FrmNombre']) ? $_REQUEST['FrmNombre'] : NULL;
+$_SESSION['FrmDescripcion']= isset($_REQUEST['FrmDescripcion']) ? $_REQUEST['FrmDescripcion'] : NULL;
+$_SESSION['TbNombre']= isset($_REQUEST['TbNombre']) ? $_REQUEST['TbNombre'] : NULL;
+$_SESSION['TxtId']= isset($_REQUEST['TxtId']) ? $_REQUEST['TxtId'] : NULL;
+
+
+// VARIABLES DEL FORMULARIO
+$Sql="SELECT * FROM tbmenu WHERE mennom='frmcgacetas'";
+$Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
+while ($Registro = mysqli_fetch_array($Resultado)) {
+	$_SESSION['FrmNombre']=$Registro['mennom'];
+	$_SESSION['FrmDescripcion']=$Registro['mendes'];
+	$_SESSION['TbNombre']=$Registro['tbmaestra'];
+	}
 
 
 //DESARROLLAR LA LOGICA DE LOS BOTONES
-$TxtId=$_REQUEST['TxtId'];
-$CmbTipo=$_REQUEST['CmbTipo'];
-$TxtAno=$_REQUEST['TxtAno'];
-$TxtMes=$_REQUEST['TxtMes'];
-$TxtFecha=$_REQUEST['TxtFecha'];
-$CmbStatus=$_REQUEST['CmbStatus'];
-$BtnAccion = isset($_REQUEST['BtnAccion']) ? $_REQUEST['BtnAccion'] : NULL;
 
 switch($BtnAccion){
 

@@ -1,26 +1,35 @@
-<?
-
-//INICIO DE SESSION DE USUARIO
-session_start();
+<?php
+//SEGURIDAD DE ACCESO
+require_once("seguridad.php");
 
 //1. CONECTAR CON MYSQL
 //2. CONECTAR CON BD
 require_once("conexion.php");
 
 // RESCATE DE VARIABLES DEL FORMULARIO
+//$Sistema="Control Jur&iacute;dico";
+//$FrmNombre="ConsultaPublicaciones";
+//$FrmDescripcion="Consulta de Publicaciones";
+//$TbNombre="tbpublicaciones";
 $BtnAccion = isset($_REQUEST['BtnAccion']) ? $_REQUEST['BtnAccion'] : NULL;
-$TxtGaceta=$_REQUEST['TxtGaceta'];
-$TxtNroPub=$_REQUEST['TxtNroPub'];
-$TxtDescripcion=$_REQUEST['TxtDescripcion'];
-$TxtEntes=$_REQUEST['TxtEntes'];
-$CmbStatus=$_REQUEST['CmbStatus'];
-
+$TxtGaceta=isset($_REQUEST['TxtGaceta']) ? $_REQUEST['TxtGaceta'] : NULL;
+$TxtNroPub=isset($_REQUEST['TxtNroPub']) ? $_REQUEST['TxtNroPub'] : NULL;
+$TxtDescripcion=isset($_REQUEST['TxtDescripcion']) ? $_REQUEST['TxtDescripcion'] : NULL;
+$TxtEntes=isset($_REQUEST['TxtEntes']) ? $_REQUEST['TxtEntes'] : NULL;
+$CmbStatus=isset($_REQUEST['CmbStatus']) ? $_REQUEST['CmbStatus'] : NULL;
+$_SESSION['FrmNombre']= isset($_REQUEST['FrmNombre']) ? $_REQUEST['FrmNombre'] : NULL;
+$_SESSION['FrmDescripcion']= isset($_REQUEST['FrmDescripcion']) ? $_REQUEST['FrmDescripcion'] : NULL;
+$_SESSION['TbNombre']= isset($_REQUEST['TbNombre']) ? $_REQUEST['TbNombre'] : NULL;
+$_SESSION['TxtId']= isset($_REQUEST['TxtId']) ? $_REQUEST['TxtId'] : NULL;
 
 //VARIABLES DEL FORMULARIO
-$Sistema="Control Jur&iacute;dico";
-$FrmNombre="ConsultaPublicaciones";
-$FrmDescripcion="Consulta de Publicaciones";
-$TbNombre="tbpublicaciones";
+
+$Sql="SELECT * FROM tbmenu WHERE mennom='frmconsultapublicaciones'";
+$Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
+while ($Registro = mysqli_fetch_array($Resultado)) {
+	$_SESSION['FrmNombre']=$Registro['mennom'];
+	$_SESSION['FrmDescripcion']=$Registro['mendes'];
+	$_SESSION['TbNombre']=$Registro['tbmaestra'];	}
 
 
 // DESARROLLAR LOGICA DE LOS BOTONES

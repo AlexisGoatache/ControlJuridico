@@ -1,26 +1,32 @@
-<?
-
-//INICIO DE SESSION DE USUARIO
-//session_start();
+<?php
+//SEGURIDAD DE ACCESO
+require_once("seguridad.php");
 
 //1. CONECTAR CON MYSQL
 //2. CONECTAR CON BD
 require_once("conexion.php");
 
+// RESCATAR LAS VARIABLES DEL FORMULARIO
+
 // RESCATE DE VARIABLES DEL FORMULARIO
+//$Sistema="Control Jur&iacute;dico";
+//$FrmNombre="ConsultaEntes";
+//$FrmDescripcion="Consulta de Entes";
+//$TbNombre="tbentes";
 $BtnAccion=isset($_REQUEST['BtnAccion']) ? $_REQUEST['BtnAccion'] : NULL;
 $TxtEnte=isset($_REQUEST['TxtEnte']) ? $_REQUEST['TxtEnte'] : NULL;
-
-
-//VARIABLES DEL FORMULARIO
-$Sistema="Control Jur&iacute;dico";
-$FrmNombre="ConsultaEntes";
-$FrmDescripcion="Consulta de Entes";
-$TbNombre="tbentes";
 $_SESSION['FrmNombre']= isset($_REQUEST['FrmNombre']) ? $_REQUEST['FrmNombre'] : NULL;
 $_SESSION['FrmDescripcion']= isset($_REQUEST['FrmDescripcion']) ? $_REQUEST['FrmDescripcion'] : NULL;
 $_SESSION['TbNombre']= isset($_REQUEST['TbNombre']) ? $_REQUEST['TbNombre'] : NULL;
+$_SESSION['TxtId']= isset($_REQUEST['TxtId']) ? $_REQUEST['TxtId'] : NULL;
 
+// VARIABLES DEL FORMULARIO
+$Sql="SELECT * FROM tbmenu WHERE mennom='frmconsultaentes'";
+$Resultado = mysqli_query($Conexion,$Sql) or die( "Error en Sql: " . mysqli_error($Conexion) );
+while ($Registro = mysqli_fetch_array($Resultado)) {
+	$_SESSION['FrmNombre']=$Registro['mennom'];
+	$_SESSION['FrmDescripcion']=$Registro['mendes'];
+	$_SESSION['TbNombre']=$Registro['tbmaestra'];	}
 
 
 // DESARROLLAR LOGICA DE LOS BOTONES
